@@ -94,3 +94,30 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("beforeunload", () => {
   localStorage.setItem("taskList", JSON.stringify(taskList));
 });
+
+document.getElementById('task-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  // Get the task data from the form
+  var taskName = document.getElementById('task-input').value;
+  var taskDate = document.getElementById('date-input').value;
+  var taskPriority = document.getElementById('priority-input').value;
+  var taskStartTime = document.getElementById('start-time-input').value;
+  var taskEndTime = document.getElementById('end-time-input').value;
+
+  // Send the email using EmailJS
+  var templateParams = {
+     task_name: taskName,
+     task_date: taskDate,
+     task_priority: taskPriority,
+     task_start_time: taskStartTime,
+     task_end_time: taskEndTime
+  };
+
+  emailjs.send('service_6eqer6i', 'template_1aikdtn', templateParams)
+     .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+     }, function(error) {
+        console.log('FAILED...', error);
+     });
+});

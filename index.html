@@ -10,6 +10,13 @@
     <meta property="og:description" content="Task List is a web application that allows you to keep track of your daily tasks and schedule. Create, manage, and prioritize tasks with ease.">
     <meta property="og:image" content="https://example.com/image.jpg">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script>
+      (function(){
+          emailjs.init("tasklist");
+      })();
+    </script>
+
 </head>
 <body>
     <div class="container">
