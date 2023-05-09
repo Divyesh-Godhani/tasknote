@@ -1,59 +1,96 @@
-// Select the form element and input fields
-const taskForm = document.querySelector('#task-form');
-const taskInput = document.querySelector('#task-input');
-const dateInput = document.querySelector('#date-input');
-const priorityInput = document.querySelector('#priority-input');
+// Define task list array
+let taskList = [];
 
-// Select the table element
-const taskTable = document.querySelector('#task-table');
+// Get form and table elements
+const taskForm = document.getElementById("task-form");
+const taskTable = document.getElementById("task-table");
 
-// Add event listener to form submission
-taskForm.addEventListener('submit', function(event) {
-  event.preventDefault(); // prevent form submission
-
-  // Get input values
-  const taskName = taskInput.value;
-  const taskDate = dateInput.value;
-  const taskPriority = priorityInput.value;
-
-  // Create new task row
-  const newRow = document.createElement('tr');
-
-  // Add task name column
-  const nameColumn = document.createElement('td');
-  nameColumn.textContent = taskName;
-  newRow.appendChild(nameColumn);
-
-  // Add task date column
-  const dateColumn = document.createElement('td');
-  dateColumn.textContent = taskDate;
-  newRow.appendChild(dateColumn);
-
-  // Add task priority column
-  const priorityColumn = document.createElement('td');
-  priorityColumn.textContent = taskPriority;
-  newRow.appendChild(priorityColumn);
-
-  // Add delete button column
-  const deleteColumn = document.createElement('td');
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Delete';
-  deleteButton.classList.add('delete-btn');
-  deleteColumn.appendChild(deleteButton);
-  newRow.appendChild(deleteColumn);
-
-  // Add new row to the table
-  taskTable.appendChild(newRow);
-
-  // Clear form inputs
-  taskInput.value = '';
-  dateInput.value = '';
-  priorityInput.value = '';
+// Add event listener to form submit button
+taskForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const nameInput = document.getElementById("task-input");
+  const dateInput = document.getElementById("date-input");
+  const priorityInput = document.getElementById("priority-input");
+  const startTimeInput = document.getElementById("start-time-input");
+  const endTimeInput = document.getElementById("end-time-input");
+  addTaskToList(nameInput.value, dateInput.value, priorityInput.value, startTimeInput.value, endTimeInput.value);
+  nameInput.value = "";
+  dateInput.value = "";
+  priorityInput.value = "";
+  startTimeInput.value = "";
+  endTimeInput.value = "";
 });
 
-// Add event listener to delete buttons
-taskTable.addEventListener('click', function(event) {
-  if (event.target.classList.contains('delete-btn')) {
-    event.target.parentElement.parentElement.remove();
+// Function to add a new task to the list and table
+function addTaskToList(name, date, priority, startTime, endTime) {
+  const task = { name, date, priority, startTime, endTime };
+  taskList.push(task);
+  addTaskToTable(task);
+}
+
+// Function to add a new task to the table
+function addTaskToTable(task) {
+  const newRow = taskTable.insertRow();
+
+  const nameCell = newRow.insertCell(0);
+  nameCell.innerText = task.name;
+
+  const dateCell = newRow.insertCell(1);
+  dateCell.innerText = task.date;
+
+  const priorityCell = newRow.insertCell(2);
+  priorityCell.innerText = task.priority;
+
+  const startTimeCell = newRow.insertCell(3);
+  startTimeCell.innerText = task.startTime;
+
+  const endTimeCell = newRow.insertCell(4);
+  endTimeCell.innerText = task.endTime;
+
+  const remainingTimeCell = newRow.insertCell(5);
+  remainingTimeCell.innerText = calculateRemainingTime(task);
+
+  const deleteCell = newRow.insertCell(6);
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "Delete";
+  deleteButton.addEventListener("click", () => deleteTaskFromTable(newRow));
+  deleteCell.appendChild(deleteButton);
+}
+
+// Function to delete a task from the list and table
+function deleteTaskFromTable(row) {
+  const index = row.rowIndex - 1;
+  taskList.splice(index, 1);
+  taskTable.deleteRow(row.rowIndex);
+}
+
+// Function to calculate remaining time for a task
+function calculateRemainingTime(task) {
+  const startTime = new Date(`${task.date}T${task.startTime}:00`);
+  const endTime = new Date(`${task.date}T${task.endTime}:00`);
+  const currentTime = new Date();
+
+  if (endTime < currentTime) {
+    return "Overdue";
   }
+
+  const remainingTime = endTime.getTime() - currentTime.getTime();
+  const remainingHours = Math.floor(remainingTime / 1000 / 60 / 60);
+  const remainingMinutes = Math.floor((remainingTime / 1000 / 60) % 60);
+
+  return `${remainingHours}h ${remainingMinutes}m`;
+}
+
+// Populate table with existing tasks on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const storedTasks = JSON.parse(localStorage.getItem("taskList"));
+  if (storedTasks) {
+    taskList = storedTasks;
+    taskList.forEach((task) => addTaskToTable(task));
+  }
+});
+
+// Save task list to local storage on page unload
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem("taskList", JSON.stringify(taskList));
 });

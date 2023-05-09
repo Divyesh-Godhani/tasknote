@@ -1,93 +1,78 @@
-/* Global styles */
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #F5F5F5;
-  color: #333;
-  margin: 0;
-  padding: 0;
-}
-
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 30px;
+  padding: 50px;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
 }
-
-/* Form styles */
 
 form {
   display: flex;
-  flex-direction: column;
-  background-color: #FFF;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-label {
-  font-size: 16px;
-  font-weight: bold;
+form label {
+  display: block;
+  width: 100%;
   margin-bottom: 10px;
 }
 
-input[type="text"], select, input[type="date"], input[type="time"] {
-  padding: 10px;
-  border: 1px solid #CCC;
-  border-radius: 5px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  width: 100%;
-  box-sizing: border-box;
+form input[type="text"],
+form input[type="date"],
+form select,
+form input[type="time"] {
+  padding: 5px;
+  width: calc(50% - 10px);
+  margin-bottom: 10px;
 }
 
-input[type="submit"] {
+form button[type="submit"] {
   background-color: #4CAF50;
-  color: #FFF;
-  padding: 10px 20px;
+  color: white;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
   font-size: 16px;
+  margin-top: 10px;
   cursor: pointer;
-  width: auto;
-  margin-top: 20px;
 }
-
-input[type="submit"]:hover {
-  background-color: #3E8E41;
-}
-
-/* Table styles */
 
 table {
-  width: 100%;
   border-collapse: collapse;
+  width: 100%;
 }
 
 th, td {
-  padding: 12px 15px;
   text-align: left;
+  padding: 8px;
 }
 
-thead {
+th {
   background-color: #4CAF50;
-  color: #FFF;
+  color: white;
 }
 
-tbody tr:nth-child(even) {
+tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-/* Responsive styles */
+.countdown-timer {
+  display: flex;
+  align-items: center;
+}
 
-@media screen and (max-width: 767px) {
-  form, table {
-    width: 100%;
-  }
+.countdown-timer__label {
+  margin-right: 10px;
+}
+
+.countdown-timer__value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
 }
