@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Task Manager</h1>
+      <form id="task-form">
+        <label for="task-input">Task Name:</label>
+        <input type="text" id="task-input" required>
+        <label for="date-input">Due Date:</label>
+        <input type="date" id="date-input" required>
+        <label for="priority-input">Priority:</label>
+        <select id="priority-input" required>
+          <option value="">-- Select Priority --</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <input type="submit" value="Add Task">
+      </form>
+      <table id="task-table">
+        <thead>
+          <tr>
+            <th>Task Name</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
