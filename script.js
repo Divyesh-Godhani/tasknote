@@ -94,39 +94,3 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("beforeunload", () => {
   localStorage.setItem("taskList", JSON.stringify(taskList));
 });
-
-// Initialize EmailJS with your user ID
-emailjs.init("ujGqSFHIUButIK0KM");
-
-// Get the form element and add a submit event listener
-const form = document.getElementById("task-form");
-form.addEventListener("submit", (e) => {
-  e.preventDefault(); // prevent form from submitting normally
-
-  // Get the input values
-  const taskName = document.getElementById("task-input").value;
-  const date = document.getElementById("date-input").value;
-  const priority = document.getElementById("priority-input").value;
-  const startTime = document.getElementById("start-time-input").value;
-  const endTime = document.getElementById("end-time-input").value;
-
-  // Format the email message
-  const message = `
-    Task Name: ${taskName}
-    Date: ${date}
-    Priority: ${priority}
-    Start Time: ${startTime}
-    End Time: ${endTime}
-  `;
-
-  // Send the email using EmailJS
-  emailjs.send("service_6eqer6i", "template_kpweot3", { message: message })
-    .then((response) => {
-      console.log("Email sent!", response.status, response.text);
-    }, (error) => {
-      console.error("Email failed to send", error);
-    });
-
-  // Clear the form inputs
-  form.reset();
-});
