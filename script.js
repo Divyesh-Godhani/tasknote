@@ -95,29 +95,38 @@ window.addEventListener("beforeunload", () => {
   localStorage.setItem("taskList", JSON.stringify(taskList));
 });
 
-document.getElementById('task-form').addEventListener('submit', function(event) {
-  event.preventDefault();
+// Initialize EmailJS with your user ID
+emailjs.init("ujGqSFHIUButIK0KM");
 
-  // Get the task data from the form
-  var taskName = document.getElementById('task-input').value;
-  var taskDate = document.getElementById('date-input').value;
-  var taskPriority = document.getElementById('priority-input').value;
-  var taskStartTime = document.getElementById('start-time-input').value;
-  var taskEndTime = document.getElementById('end-time-input').value;
+// Get the form element and add a submit event listener
+const form = document.getElementById("task-form");
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // prevent form from submitting normally
+
+  // Get the input values
+  const taskName = document.getElementById("task-input").value;
+  const date = document.getElementById("date-input").value;
+  const priority = document.getElementById("priority-input").value;
+  const startTime = document.getElementById("start-time-input").value;
+  const endTime = document.getElementById("end-time-input").value;
+
+  // Format the email message
+  const message = `
+    Task Name: ${taskName}
+    Date: ${date}
+    Priority: ${priority}
+    Start Time: ${startTime}
+    End Time: ${endTime}
+  `;
 
   // Send the email using EmailJS
-  var templateParams = {
-     task_name: taskName,
-     task_date: taskDate,
-     task_priority: taskPriority,
-     task_start_time: taskStartTime,
-     task_end_time: taskEndTime
-  };
+  emailjs.send("service_6eqer6i", "template_kpweot3", { message: message })
+    .then((response) => {
+      console.log("Email sent!", response.status, response.text);
+    }, (error) => {
+      console.error("Email failed to send", error);
+    });
 
-  emailjs.send('service_6eqer6i', 'template_1aikdtn', templateParams)
-     .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-     }, function(error) {
-        console.log('FAILED...', error);
-     });
+  // Clear the form inputs
+  form.reset();
 });
