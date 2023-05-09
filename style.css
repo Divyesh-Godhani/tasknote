@@ -98,3 +98,102 @@ td:last-child button {
 td:last-child button:hover {
   background-color: #c0392b;
 }
+
+/* Mobile devices */
+@media only screen and (max-width: 767px) {
+  /* Reduce font sizes */
+  h1 {
+    font-size: 24px;
+  }
+  label {
+    font-size: 16px;
+  }
+  input,
+  select,
+  button {
+    font-size: 14px;
+  }
+  /* Adjust padding */
+  .container {
+    padding: 10px;
+  }
+  #task-form {
+    padding: 10px;
+  }
+  #task-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  #task-form input,
+  #task-form select {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #task-form button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+  #task-table {
+    font-size: 14px;
+  }
+  #task-table th,
+  #task-table td {
+    padding: 5px;
+  }
+  #task-table th:nth-child(6),
+  #task-table td:nth-child(6) {
+    display: none;
+  }
+}
+
+/* Tablets */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Reduce font sizes */
+  h1 {
+    font-size: 36px;
+  }
+  label {
+    font-size: 18px;
+  }
+  input,
+  select,
+  button {
+    font-size: 16px;
+  }
+  /* Adjust padding */
+  .container {
+    padding: 20px;
+  }
+  #task-form {
+    padding: 20px;
+  }
+  #task-form label {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  #task-form input,
+  #task-form select {
+    display: inline-block;
+    margin-right: 10px;
+    width: 150px;
+    box-sizing: border-box;
+  }
+  #task-form button {
+    display: inline-block;
+    margin-top: 10px;
+  }
+  #task-table {
+    font-size: 16px;
+  }
+  #task-table th,
+  #task-table td {
+    padding: 10px;
+  }
+  #task-table th:nth-child(6),
+  #task-table td:nth-child(6) {
+    display: none;
+  }
+}
